@@ -1,6 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+
+
 const app = express();
+
+// Config for Body-Parser
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
 // Router
 const Users = require('./routes/api/users');
@@ -14,6 +22,12 @@ mongoose
     .connect(db,{ useNewUrlParser: true })
     .then(()=>console.log("DataBase is connected"))
     .catch((err)=>console.log(err));
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Strategy
+require('./config/passport')(passport);
 
 // Other routes
 app.use('/api/users',Users);
