@@ -35,9 +35,7 @@ app.use('/api/profile',Profile);
 app.use('/api/post',Post);
 
  // Default Router
-app.use('/',(req,res)=>{
-    res.send("Hello World");
-});
+
 
 // PORT variable
 const PORT = process.env.PORT||5000;

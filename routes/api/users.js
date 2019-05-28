@@ -5,6 +5,7 @@ const User = require('../../Models/User');
 const gravator = require('gravator');
 const keys = require('../../config/key');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 
 // @route   api/user/test
@@ -24,6 +25,7 @@ router.post('/register',(req,res)=>{
             }
             else{
                 // Gravator 
+                // const avatar = gravator.url(req.body.email);
 
                 // Creating new User
                 const newUser = new User({
@@ -89,5 +91,16 @@ router.post('/login',(req,res)=>{
     })
 });
 
+
+
+// @route   api/user/current
+// @access  Private
+router.get('/current',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    res.json({
+        id:req.user.id,
+        user:req.user.name,
+        email:req.user.email
+    });
+});
 
 module.exports= router;
